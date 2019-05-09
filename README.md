@@ -97,7 +97,7 @@ session.remove()
 or from the server root
 
 ```python
-docker-compose exec app python user_create.py ${EMAIL} ${FIRST_NAME} ${LAST_NAME}
+docker-compose exec app python user_create.py email-address first-name last-name
 ```
 
 or outside of docker:
