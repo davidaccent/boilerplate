@@ -8,9 +8,11 @@ from starlette.middleware.sessions import SessionMiddleware
 from starlette.staticfiles import StaticFiles
 
 from app import admin, db, endpoints, globals, handlers, settings
+from app.media import config as media_config
 
 # config
 starlette_admin.config.logout_url = "/auth/logout"
+starlette_admin.config.templates = globals.templates
 starlette_auth.config.change_pw_template = "starlette_admin/auth/change_password.html"
 starlette_auth.config.login_template = "starlette_admin/auth/login.html"
 starlette_auth.config.templates = globals.templates
@@ -36,6 +38,13 @@ app.mount(
     path="/static",
     app=StaticFiles(directory="static", packages=["starlette_admin"]),
     name="static",
+)
+
+# media app
+app.mount(
+    path="/media",
+    app=StaticFiles(directory=media_config.root_directory, check_dir=False),
+    name="media",
 )
 
 # middleware
