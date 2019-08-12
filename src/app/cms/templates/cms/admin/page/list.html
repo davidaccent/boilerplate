@@ -1,0 +1,34 @@
+{% extends "starlette_admin/base.html" %}
+
+{% block content %}
+<div class="container-fluid mt-header">
+    {% include "starlette_admin/partials/breadcrumb.html" %}
+
+    <a href="{{ url_for(url_names.create) }}{% if parent %}?parent={{ parent.id}}{% endif %}" class="button button-primary pull-right">New Record</a>
+    <h1 class="f-lite">{{ collection_name }}</h1>
+
+    <ul class="page-tree">
+    {%- for object in list_objects -%}
+        <li>
+            <a href="{{ url_for(url_names.edit, id=object.id) }}">{{ object }}</a>
+            <a href="{{ url_for(url_names.create) }}?parent={{ object.id }}" class="button button-primary button-small button-outline ml-auto mr-h">New</a>
+            <a href="{{ url_for(url_names.list) }}?parent={{ object.id }}" class="button button-primary button-small">View</a>
+        </li>
+    {%- endfor -%}
+    </ul>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.page-tree {
+    list-style: none;
+}
+.page-tree li {
+    border: 1px solid #e6e6e6;
+    display: flex;
+    margin-bottom: 1px;
+    padding: .8rem 1rem;
+}
+</style>
+{% endblock %}

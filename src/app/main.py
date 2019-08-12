@@ -11,6 +11,7 @@ from app import admin, db, endpoints, globals, handlers, settings
 
 # config
 starlette_admin.config.logout_url = "/auth/logout"
+starlette_admin.config.templates = globals.templates
 starlette_auth.config.change_pw_template = "starlette_admin/auth/change_password.html"
 starlette_auth.config.login_template = "starlette_admin/auth/login.html"
 starlette_auth.config.templates = globals.templates
