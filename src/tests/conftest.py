@@ -40,6 +40,16 @@ def user():
 
 
 @pytest.yield_fixture(scope="function", autouse=False)
+def token(user, client):
+    response = client.post(
+        "/api/token", data={"username": user.email, "password": "password"}
+    )
+    assert response.status_code == 200
+    bearer = response.json()["access_token"]
+    return f"Bearer {bearer}"
+
+
+@pytest.yield_fixture(scope="function", autouse=False)
 def client():
     with TestClient(main.app) as client:
         yield client
