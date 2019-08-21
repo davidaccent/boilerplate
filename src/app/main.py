@@ -26,6 +26,26 @@ app = Starlette(debug=settings.DEBUG)
 
 # routes
 app.add_route("/", endpoints.Home, methods=["GET"], name="home")
+## test route dr
+app.add_route("/users", endpoints.Users, methods=["GET"], name="users")
+app.add_route(
+    "/users/{user_id:int}/details",
+    endpoints.UserDetail,
+    methods=["GET"],
+    name="user_detail",
+)
+app.add_route(
+    "/users/{user_id:int}/details/update",
+    endpoints.UserUpdate,
+    methods=["GET", "Post"],
+    name="user_update",
+)
+app.add_route(
+    "/users/{user_id:int}/details/update/delete",
+    endpoints.UserDelete,
+    methods=["GET", "POST"],
+    name="user_delete",
+)
 
 # sub apps
 app.mount(path="/admin", app=admin.adminsite, name=admin.adminsite.name)

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block header %}
+<header class="py-1">
+        <div class="container d-flex">
+            <div class="h2 m-0"><a href="/">Users</a></div>
+            <div class="ml-auto">
+                {% if request.user.is_authenticated %}
+                <a href="{{ url_for('auth:change_password') }}">Change Password</a>
+                <span>&middot;</span>
+                <a href="{{ url_for('auth:logout') }}">Logout</a>
+                {% else %}
+                <a href="{{ url_for('auth:login') }}">Login</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+
+{% block content %}
+<div class="container my-1h">
+    <h3>Select User</h3>
+    <table class="table table-headed">
+        <thead>
+            <tr>
+                <th>{{ "Email" }}</th>
+                <th>{{ "First Name" }}</th>
+                <th>{{ "Last Name" }}</th>
+                <th>{{ "Active" }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users -%}
+        <tr>
+            {# for item in user #}
+            <td><a href="{{ url_for('user_detail', user_id=user.id) }}">{{ user.email|e }}</a></td>
+            <td>{{ user.first_name|e }}</td>
+            <td>{{ user.last_name|e }}</td>
+                {% if user.is_active %}
+                    <td>{{ "Active" }}</td>
+                {% else %}
+                    <td>{{ "Inactive" }}</td>
+                {% endif %}
+            {# endfor #}
+        </tr>
+        {% endfor %}
+        <tbody>
+    </table>
+</br>
+    <p><a href="/"> Home Page</a></p>
+</div>
+{% endblock %}
